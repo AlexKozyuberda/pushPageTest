@@ -3,7 +3,7 @@ import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import user from '../../assets/user.svg';
 import { getIconComponent } from '../../helpers/getIconComponent';
-import { StyledFormControlSelect, StyledHeader } from '../../theme/styles';
+import { StyledFormControlDropDown, StyledHeader } from '../../theme/styles';
 import { StyledSwitch } from '../../theme/styles/StyledSwitch';
 import { EnumIcons } from '../../types';
 
@@ -23,7 +23,7 @@ export const Header: FC = () => {
       <div className='content'>
         <ul className='menu'>
           <li className='menu-item'>
-            <StyledFormControlSelect>
+            <StyledFormControlDropDown>
               <Select
                 value={selectedValue}
                 onChange={handleChange}
@@ -32,7 +32,7 @@ export const Header: FC = () => {
                 <MenuItem value='en'>En</MenuItem>
                 <MenuItem value='ua'>Ua</MenuItem>
               </Select>
-            </StyledFormControlSelect>
+            </StyledFormControlDropDown>
           </li>
           <li className='menu-item'>
             <StyledSwitch />

@@ -17,7 +17,7 @@ export const StyledHeader = styled.header`
   }
 `;
 
-export const StyledFormControlSelect = styled(FormControl)`
+export const StyledFormControlDropDown = styled(FormControl)`
   .MuiInputBase-root {
     display: flex;
     flex-direction: row-reverse;
@@ -44,6 +44,7 @@ export const StyledFormControlSelect = styled(FormControl)`
       flex: 0 0 12px;
       margin-top: -4px;
       height: 12px;
+      fill: ${theme.colors.light};
     }
 
     fieldset {

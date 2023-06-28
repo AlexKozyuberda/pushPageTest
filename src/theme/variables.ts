@@ -15,6 +15,7 @@ export const theme = {
     dark: '#989da0',
     steelGray: '#82888d',
     blue100: '#4e5788',
+    midnightBlue: '#2b3141',
     bg: {
       baseDark: '#22282f',
       blueGray: '#323a47',

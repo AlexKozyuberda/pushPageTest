@@ -1,4 +1,4 @@
-import { NotFound, Pushes } from '../pages';
+import { NotFound, PushesPage } from '../pages';
 
 export const routes = [
   {
@@ -13,7 +13,7 @@ export const routes = [
   },
   {
     path: '/pushes',
-    element: Pushes,
+    element: PushesPage,
     exact: true,
   },
   {
