@@ -1,3 +1,4 @@
+import { FormHelperText } from '@mui/material';
 import { FC } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import {
@@ -7,7 +8,7 @@ import {
 import { Label } from './Label';
 
 export const Textarea: FC<IPropTypes> = props => {
-  const { register, label, placeholder, id, tooltipText } = props;
+  const { register, label, placeholder, id, tooltipText, error } = props;
 
   return (
     <StyledFormControl fullWidth>
@@ -17,7 +18,9 @@ export const Textarea: FC<IPropTypes> = props => {
         id={id}
         placeholder={placeholder}
         {...register}
+        error={!!error}
       />
+      {!!error && <FormHelperText>{error.message}</FormHelperText>}
     </StyledFormControl>
   );
 };

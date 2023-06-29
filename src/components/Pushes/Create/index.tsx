@@ -1,3 +1,4 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, DialogContent, FormControl, MenuItem } from '@mui/material';
 import SelectCustom from '@mui/material/Select';
 import { useState } from 'react';
@@ -26,6 +27,7 @@ import { Select } from '../../FormElements/Select';
 import { Textarea } from '../../FormElements/Textarea';
 import { PreviewPushes } from '../Preview';
 import { Segmentation } from './Segmentation';
+import { pushSchema } from './config';
 
 const options = [
   { value: 'option1', label: 'Option 1' },
@@ -40,6 +42,7 @@ export const CreatePushes = () => {
 
   const methods = useForm({
     mode: 'onTouched',
+    resolver: yupResolver(pushSchema),
   });
 
   const onSubmit = (data: any) => {
@@ -66,6 +69,10 @@ export const CreatePushes = () => {
     );
   };
 
+  const {
+    errors: { pushMessage, pushTitle },
+  } = methods.formState;
+
   return (
     <StyledCreatePushes>
       <FormProvider {...methods}>
@@ -86,12 +93,14 @@ export const CreatePushes = () => {
                     id='push-title'
                     placeholder='Введите заголовок максимально 50 символов'
                     register={methods.register('pushTitle')}
+                    error={pushTitle}
                   />
                   <Textarea
                     label='Текст сообщения'
                     id='push-message'
                     placeholder='Введите заголовок максимально 50 символов'
                     register={methods.register('pushMessage')}
+                    error={pushMessage}
                   />
 
                   <Select
@@ -156,7 +165,11 @@ export const CreatePushes = () => {
         <DialogContent>
           <FormControl>
             <Label label='Выберите дополнительные параметры' />
-            <SelectCustom value={segment} onChange={handleSegmentChange}>
+            <SelectCustom
+              value={segment}
+              onChange={handleSegmentChange}
+              displayEmpty
+            >
               <MenuItem value='' disabled>
                 Выберите пункт
               </MenuItem>

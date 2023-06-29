@@ -187,11 +187,33 @@ export const StyledInput = styled(InputBase)`
       opacity: 1;
     }
   }
+
+  &.Mui-error {
+    .MuiInputBase-input {
+      border-color: ${theme.colors.red100};
+    }
+  }
+
+  & ~ .MuiFormHelperText-root {
+    margin: -5px 0 0;
+    color: ${theme.colors.red100};
+  }
 `;
 
 export const StyledTextarea = styled(InputBase)`
   &.MuiInputBase-root {
     padding: 0;
+
+    &.Mui-error {
+      .MuiInputBase-input {
+        border-color: ${theme.colors.red100};
+      }
+    }
+
+    & ~ .MuiFormHelperText-root {
+      margin: -5px 0 0;
+      color: ${theme.colors.red100};
+    }
   }
   .MuiInputBase-input {
     box-sizing: border-box;
@@ -333,7 +355,10 @@ export const StyledTimePicker = styled(TimePicker)`
     font-family: 'Manrope', sans-serif;
     font-size: 16px;
     color: ${theme.colors.light};
-    background-color: ${props => props.style?.backgroundColor};
+    background-color: ${props =>
+      props.style === 'dark'
+        ? theme.colors.bg.baseDark
+        : theme.colors.field.baseLight};
     border: 1px solid ${theme.colors.field.strokeBlue};
     border-radius: 4px;
 

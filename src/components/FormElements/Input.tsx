@@ -1,3 +1,4 @@
+import { FormHelperText } from '@mui/material';
 import { FC } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { StyledFormControl, StyledInput } from '../../theme/styles/StyledField';
@@ -5,7 +6,8 @@ import { theme } from '../../theme/variables';
 import { Label } from './Label';
 
 export const Input: FC<IPropTypes> = props => {
-  const { register, label, placeholder, id, tooltipText, bgColor } = props;
+  const { register, label, placeholder, id, tooltipText, bgColor, error } =
+    props;
   const inputStyle = {
     backgroundColor:
       bgColor === 'dark'
@@ -20,8 +22,10 @@ export const Input: FC<IPropTypes> = props => {
         style={inputStyle}
         id={id}
         placeholder={placeholder}
+        error={!!error}
         {...register}
       />
+      {!!error && <FormHelperText>{error.message}</FormHelperText>}
     </StyledFormControl>
   );
 };

@@ -7,10 +7,23 @@ import { FC } from 'react';
 import { Control, Controller, FieldValues } from 'react-hook-form';
 import { getIconComponent } from '../../helpers/getIconComponent';
 import { StyledDatePicker } from '../../theme/styles/StyledField';
+import { theme } from '../../theme/variables';
 import { EnumIcons } from '../../types';
 dayjs.locale('uk');
 
-export const Date: FC<IPropTypes> = ({ control, name, placeholder }) => {
+export const Date: FC<IPropTypes> = ({
+  control,
+  name,
+  placeholder,
+  bgColor,
+}) => {
+  const inputStyle = {
+    backgroundColor:
+      bgColor === 'dark'
+        ? theme.colors.bg.baseDark
+        : theme.colors.field.baseLight,
+  };
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Controller
@@ -21,6 +34,7 @@ export const Date: FC<IPropTypes> = ({ control, name, placeholder }) => {
             <StyledDatePicker
               {...field}
               value={field.value || null}
+              style={inputStyle}
               format='DD.MM.YYYY'
               onChange={value => field.onChange(value)}
               slotProps={{
@@ -39,7 +53,6 @@ export const Date: FC<IPropTypes> = ({ control, name, placeholder }) => {
 
 interface IPropTypes {
   name: string;
-  bgColor?: string;
   placeholder?: string;
   control: Control<FieldValues, any>;
   onChange?: (event: SelectChangeEvent) => void;

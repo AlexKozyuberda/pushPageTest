@@ -30,11 +30,13 @@ export const DateRow = ({ index }) => {
             control={control}
             name={`pushDates.mailing${index}.date`}
             placeholder='дд.мм.гггг'
+            bgColor='dark'
           />
           <Time
             control={control}
             name={`pushDates.mailing${index}.time`}
             placeholder='--:--'
+            bgColor='dark'
           />
         </div>
       </div>
