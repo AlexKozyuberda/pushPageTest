@@ -12,11 +12,17 @@ export const StyledPreview = styled.div`
   .title {
     text-shadow: 0px 0px 2px #000;
   }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px 0;
+  }
 `;
 
 export const StyledPhone = styled.div`
   position: relative;
-  margin: 0 auto;
+  margin: 0 auto 32px;
   padding: 18px;
   border-radius: 23px;
   background-color: ${theme.colors.bg.blueGray};
@@ -106,7 +112,7 @@ export const StyledNotification = styled.div`
   left: 50%;
   z-index: 1;
   width: 344px;
-  padding: 12px;
+  padding: 12px 12px 20px;
   font-size: 12px;
   font-weight: ${theme.fontWeight.medium};
   color: ${theme.colors.bg.baseDark};
@@ -186,7 +192,7 @@ export const StyledNotification = styled.div`
   .notification-content {
     padding-left: 36px;
 
-    .title {
+    .heading {
       display: block;
 
       &:not(:last-child) {

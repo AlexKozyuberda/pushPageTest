@@ -1,14 +1,16 @@
-import { FormControl } from '@mui/material';
 import { FC } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
-import { StyledTextarea } from '../../theme/styles/StyledField';
+import {
+  StyledFormControl,
+  StyledTextarea,
+} from '../../theme/styles/StyledField';
 import { Label } from './Label';
 
 export const Textarea: FC<IPropTypes> = props => {
   const { register, label, placeholder, id, tooltipText } = props;
 
   return (
-    <FormControl fullWidth>
+    <StyledFormControl fullWidth>
       {label && <Label label={label} tooltipText={tooltipText} id={id} />}
       <StyledTextarea
         multiline
@@ -16,7 +18,7 @@ export const Textarea: FC<IPropTypes> = props => {
         placeholder={placeholder}
         {...register}
       />
-    </FormControl>
+    </StyledFormControl>
   );
 };
 

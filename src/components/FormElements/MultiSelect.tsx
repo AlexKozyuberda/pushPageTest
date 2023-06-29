@@ -1,7 +1,6 @@
 import {
   Autocomplete,
   Chip,
-  FormControl,
   IconButton,
   SelectChangeEvent,
 } from '@mui/material';
@@ -9,10 +8,11 @@ import { FC, useState } from 'react';
 import { Control, Controller, FieldValues } from 'react-hook-form';
 import { getIconComponent } from '../../helpers/getIconComponent';
 import {
-  StyledClearButton,
+  StyledFormControl,
   StyledLabelContainer,
   StyledMultiSelect,
 } from '../../theme/styles/StyledField';
+import { StyledClearButton } from '../../theme/styles/StyledMainContent';
 import { EnumIcons } from '../../types';
 import { Label } from './Label';
 
@@ -33,7 +33,7 @@ export const MultiSelect: FC<IPropTypes> = props => {
   };
 
   return (
-    <FormControl>
+    <StyledFormControl fullWidth>
       {label && (
         <StyledLabelContainer>
           <Label label={label} tooltipText={tooltipText} />
@@ -84,7 +84,7 @@ export const MultiSelect: FC<IPropTypes> = props => {
           />
         )}
       />
-    </FormControl>
+    </StyledFormControl>
   );
 };
 

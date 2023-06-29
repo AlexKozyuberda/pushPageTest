@@ -1,18 +1,26 @@
-import {
-  FormControl,
-  IconButton,
-  MenuItem,
-  SelectChangeEvent,
-} from '@mui/material';
+import { IconButton, MenuItem, SelectChangeEvent } from '@mui/material';
 import { FC } from 'react';
 import { Control, Controller, FieldValues } from 'react-hook-form';
 import { getIconComponent } from '../../helpers/getIconComponent';
-import { StyledInputLabel, StyledSelect } from '../../theme/styles/StyledField';
+import {
+  StyledFormControl,
+  StyledInputLabel,
+  StyledSelect,
+} from '../../theme/styles/StyledField';
 import { StyledTooltip } from '../../theme/styles/StyledTooltip';
 import { EnumIcons } from '../../types';
 
 export const Select: FC<IPropTypes> = props => {
-  const { control, options, label, tooltipText, name, placeholder, id } = props;
+  const {
+    control,
+    options,
+    label,
+    tooltipText,
+    name,
+    placeholder,
+    id,
+    bgColor,
+  } = props;
 
   const optionsJSX = options?.map(({ name }) => {
     return (
@@ -22,7 +30,7 @@ export const Select: FC<IPropTypes> = props => {
     );
   });
   return (
-    <FormControl>
+    <StyledFormControl fullWidth>
       {label && (
         <StyledInputLabel id={id} shrink>
           {label}
@@ -40,6 +48,7 @@ export const Select: FC<IPropTypes> = props => {
         defaultValue=''
         render={({ field }) => (
           <StyledSelect
+            theme={bgColor}
             labelId={id}
             onChange={e => {
               field.onChange(e.target.value);
@@ -57,12 +66,13 @@ export const Select: FC<IPropTypes> = props => {
           </StyledSelect>
         )}
       />
-    </FormControl>
+    </StyledFormControl>
   );
 };
 
 interface IPropTypes {
   name: string;
+  bgColor?: string;
   label?: string;
   tooltipText?: string;
   id?: string;

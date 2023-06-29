@@ -1,0 +1,6 @@
+export const pushOptions = Object.freeze({
+  SET_PUSH_SEGMENT: 'SET_PUSH_SEGMENT',
+  SET_PUSH_DATE: 'SET_PUSH_DATE',
+  DELETE_PUSH: 'DELETE_PUSH',
+  SET_PREVIEW_DATA: 'SET_PREVIEW_DATA',
+});

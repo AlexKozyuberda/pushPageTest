@@ -6,13 +6,16 @@ import {
   StyledPreview,
 } from '../../../theme/styles/StyledPreview';
 
-import defaultIcon from '../../../assets/default-icon.svg';
+import { useSelector } from 'react-redux';
 import { getIconComponent } from '../../../helpers/getIconComponent';
+import { getPreviewData } from '../../../lib/redux/selectors';
 import { EnumIcons } from '../../../types';
+import { MailingType } from '../Create/MailingType';
 
-export const PreviewPushes = ({ watch }) => {
+export const PreviewPushes = () => {
   const [currentHour, setCurrentHour] = useState('');
   const [currentMinute, setCurrentMinute] = useState('');
+  const previewData = useSelector(getPreviewData);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -48,11 +51,11 @@ export const PreviewPushes = ({ watch }) => {
             <div className='notification-heading'>
               <div className='user'>
                 <div className='icon'>
-                  <img src={watch('pushIcon') || defaultIcon} alt='' />
+                  <img src={previewData.pushIcon} alt={previewData.pushName} />
                 </div>
                 <ul className='list'>
                   <li>
-                    <span className='name'>Push name</span>
+                    <span className='name'>{previewData.pushName}</span>
                   </li>
                   <li>
                     <span className='time'>now</span>
@@ -63,10 +66,11 @@ export const PreviewPushes = ({ watch }) => {
             </div>
 
             <div className='notification-content'>
-              <span className='title'>{watch('pushTitle')}</span>
-              <p className='text'>{watch('pushMessage')}</p>
-              {watch('pushImg') && (
-                <img className='img' src={watch('pushImg')} alt='' />
+              <span className='heading'>{previewData.pushTitle}</span>
+              <p className='text'>{previewData.pushMessage}</p>
+
+              {previewData.pushImg && (
+                <img className='img' src={previewData.pushImg} alt='demo' />
               )}
             </div>
           </StyledNotification>
@@ -79,6 +83,7 @@ export const PreviewPushes = ({ watch }) => {
           <div className='control'></div>
         </div>
       </StyledPhone>
+      <MailingType />
     </StyledPreview>
   );
 };

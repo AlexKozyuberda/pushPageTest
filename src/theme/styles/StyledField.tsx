@@ -5,19 +5,16 @@ import {
   Select,
   TextField,
 } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+
 import styled from 'styled-components';
 import { theme } from '../variables';
 
 export const StyledFormControl = styled(FormControl)`
-  width: 100%;
-`;
-
-export const StyledClearButton = styled.span`
-  display: block;
-  font-weight: ${theme.fontWeight.semiBold};
-  font-size: 14px;
-  color: ${theme.colors.red100};
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 8px 0;
 `;
 
 export const StyledLabelContainer = styled.div`
@@ -29,10 +26,6 @@ export const StyledLabelContainer = styled.div`
     &:not(:last-child) {
       margin-bottom: 0;
     }
-  }
-
-  &:not(:last-child) {
-    margin-bottom: 8px;
   }
 `;
 
@@ -137,51 +130,55 @@ export const StyledSelect = styled(Select)`
     font-family: 'Manrope', sans-serif;
     font-size: 16px;
     color: ${theme.colors.light};
-    background-color: ${theme.colors.field.baseLight};
-    border: 1px solid ${theme.colors.field.strokeBlue};
-    border-radius: 4px;
+    background-color: ${props =>
+      props.theme === 'dark'
+        ? theme.colors.bg.baseDark
+        : theme.colors.field.baseLight};
+  }
+  border: 1px solid ${theme.colors.field.strokeBlue};
+  border-radius: 4px;
 
-    .MuiSelect-select {
-      &.MuiInputBase-input {
-        position: relative;
-        z-index: 1;
-        padding: 0 40px 0 20px;
-      }
+  .MuiSelect-select {
+    &.MuiInputBase-input {
+      position: relative;
+      z-index: 1;
+      padding: 0 40px 0 20px;
     }
+  }
 
-    .placeholder {
-      color: ${theme.colors.steelGray};
-    }
+  .placeholder {
+    color: ${theme.colors.steelGray};
+  }
 
-    svg {
-      position: absolute;
-      top: 50%;
-      right: 20px;
-      width: 12px;
-      height: 12px;
-      margin-top: -4px;
-      fill: ${theme.colors.blue100};
-    }
+  svg {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    width: 12px;
+    height: 12px;
+    margin-top: -4px;
+    fill: ${theme.colors.blue100};
+  }
 
-    fieldset {
-      border: none;
-    }
+  fieldset {
+    border: none;
+  }
 
-    &::after,
-    &::before {
-      content: none;
-    }
+  &::after,
+  &::before {
+    content: none;
   }
 `;
 
 export const StyledInput = styled(InputBase)`
   .MuiInputBase-input {
+    box-sizing: border-box;
     height: 46px;
     padding: 0 20px;
     font-family: 'Manrope', sans-serif;
     font-size: 16px;
     color: ${theme.colors.light};
-    background-color: ${theme.colors.field.baseLight};
+    background-color: ${props => props.style?.backgroundColor};
     border: 1px solid ${theme.colors.field.strokeBlue};
     border-radius: 4px;
 
@@ -227,10 +224,6 @@ export const StyledInputLabel = styled(InputLabel)`
     color: ${theme.colors.light};
     transform: translate(0, 0) scale(1);
 
-    &:not(:last-child) {
-      margin-bottom: 8px;
-    }
-
     &.Mui-focused {
       color: ${theme.colors.light};
     }
@@ -238,5 +231,115 @@ export const StyledInputLabel = styled(InputLabel)`
   .MuiButtonBase-root {
     width: 20px;
     height: 20px;
+  }
+`;
+
+export const StyledDatePicker = styled(DatePicker)`
+  .MuiInputBase-root {
+    padding: 0;
+    font-family: 'Manrope', sans-serif;
+    font-weight: ${theme.fontWeight.semiBold};
+    font-size: 16px;
+
+    .MuiInputAdornment-root {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      width: 20px;
+      height: 20px;
+      margin: 0;
+      transform: translateY(-50%);
+
+      .MuiIconButton-root {
+        padding: 0;
+        width: 100%;
+        height: 100%;
+
+        svg {
+          display: block;
+          width: 100%;
+          height: 100%;
+          fill: ${theme.colors.yellow100};
+        }
+      }
+    }
+
+    fieldset {
+      top: 0;
+      padding: 0;
+      border: none;
+    }
+  }
+
+  .MuiInputBase-input {
+    box-sizing: border-box;
+    height: 46px;
+    padding: 0 20px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 16px;
+    color: ${theme.colors.light};
+    background-color: ${props => props.style?.backgroundColor};
+    border: 1px solid ${theme.colors.field.strokeBlue};
+    border-radius: 4px;
+
+    &::placeholder {
+      color: ${theme.colors.steelGray};
+      opacity: 1;
+    }
+  }
+`;
+
+export const StyledTimePicker = styled(TimePicker)`
+  .MuiInputBase-root {
+    padding: 0;
+    font-family: 'Manrope', sans-serif;
+    font-weight: ${theme.fontWeight.semiBold};
+    font-size: 16px;
+
+    .MuiInputAdornment-root {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      width: 20px;
+      height: 20px;
+      margin: 0;
+      transform: translateY(-50%);
+
+      .MuiIconButton-root {
+        padding: 0;
+        width: 100%;
+        height: 100%;
+
+        svg {
+          display: block;
+          width: 100%;
+          height: 100%;
+          fill: ${theme.colors.yellow100};
+        }
+      }
+    }
+
+    fieldset {
+      top: 0;
+      padding: 0;
+      border: none;
+    }
+  }
+
+  .MuiInputBase-input {
+    box-sizing: border-box;
+    height: 46px;
+    padding: 0 20px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 16px;
+    color: ${theme.colors.light};
+    background-color: ${props => props.style?.backgroundColor};
+    border: 1px solid ${theme.colors.field.strokeBlue};
+    border-radius: 4px;
+
+    &::placeholder {
+      color: ${theme.colors.steelGray};
+      opacity: 1;
+    }
   }
 `;
