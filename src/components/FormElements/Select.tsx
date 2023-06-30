@@ -1,34 +1,28 @@
-import { IconButton, MenuItem, SelectChangeEvent } from '@mui/material';
+import { IconButton, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { FC } from 'react';
-import { Control, Controller, FieldValues } from 'react-hook-form';
+import { Control, Controller } from 'react-hook-form';
+import { generateID } from '../../helpers/getGenerateId';
 import { getIconComponent } from '../../helpers/getIconComponent';
 import {
+  StyledField,
   StyledFormControl,
   StyledInputLabel,
-  StyledSelect,
 } from '../../theme/styles/StyledField';
 import { StyledTooltip } from '../../theme/styles/StyledTooltip';
 import { EnumIcons } from '../../types';
 
-export const Select: FC<IPropTypes> = props => {
-  const {
-    control,
-    options,
-    label,
-    tooltipText,
-    name,
-    placeholder,
-    id,
-    bgColor,
-  } = props;
+export const SelectField: FC<IPropTypes> = props => {
+  const { control, options, label, tooltipText, name, placeholder, id, color } =
+    props;
 
-  const optionsJSX = options?.map(({ name }) => {
+  const optionsJSX = options?.map(option => {
     return (
-      <MenuItem key={name} value={name}>
-        {name}
+      <MenuItem key={generateID()} value={option.value}>
+        {option.label}
       </MenuItem>
     );
   });
+
   return (
     <StyledFormControl fullWidth>
       {label && (
@@ -47,23 +41,24 @@ export const Select: FC<IPropTypes> = props => {
         control={control}
         defaultValue=''
         render={({ field }) => (
-          <StyledSelect
-            theme={bgColor}
-            labelId={id}
-            onChange={e => {
-              field.onChange(e.target.value);
-            }}
-            value={field.value || ''}
-            displayEmpty
-            IconComponent={() => getIconComponent(EnumIcons.choiceArrow)}
-          >
-            {placeholder && (
-              <MenuItem value='' disabled>
-                <span className='placeholder'>{placeholder}</span>
-              </MenuItem>
-            )}
-            {optionsJSX}
-          </StyledSelect>
+          <StyledField select color={color}>
+            <Select
+              labelId={id}
+              onChange={e => {
+                field.onChange(e.target.value);
+              }}
+              value={field.value || ''}
+              displayEmpty
+              IconComponent={() => getIconComponent(EnumIcons.choiceArrow)}
+            >
+              {placeholder && (
+                <MenuItem value='' disabled>
+                  <span className='placeholder'>{placeholder}</span>
+                </MenuItem>
+              )}
+              {optionsJSX}
+            </Select>
+          </StyledField>
         )}
       />
     </StyledFormControl>
@@ -72,13 +67,13 @@ export const Select: FC<IPropTypes> = props => {
 
 interface IPropTypes {
   name: string;
-  bgColor?: string;
+  color?: string;
   label?: string;
   tooltipText?: string;
   id?: string;
   placeholder?: string;
-  options: { name?: string }[];
-  control: Control<FieldValues, any>;
+  options: { label?: string; value?: string }[];
+  control: Control<any, any>;
   onChange?: (event: SelectChangeEvent) => void;
   error?: {
     message?: string;

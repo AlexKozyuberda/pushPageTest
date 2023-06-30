@@ -16,7 +16,10 @@ export const StyledAdditionalOptions = styled.div`
   .buttons {
     display: flex;
     justify-content: space-between;
-    padding-top: 24px;
+
+    &:not(:first-child) {
+      padding-top: 24px;
+    }
 
     span {
       font-size: 16px;

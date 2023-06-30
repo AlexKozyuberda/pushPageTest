@@ -1,4 +1,4 @@
 export * from './StyledGlobal';
-export * from './StyledHeader';
-export * from './StyledNavigation';
-export * from './StyledWrapper';
+export * from './layout/StyledHeader';
+export * from './layout/StyledNavigation';
+export * from './layout/StyledWrapper';

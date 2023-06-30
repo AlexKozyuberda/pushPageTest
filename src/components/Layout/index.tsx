@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 import { StyledWrapper } from '../../theme/styles';
-import { StyledMainContent } from '../../theme/styles/StyledMainContent';
+import { StyledMainContent } from '../../theme/styles/layout/StyledMainContent';
 import { Header } from '../Header';
 import { Navigation } from '../Navigation';
 

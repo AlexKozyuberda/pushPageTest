@@ -1,8 +1,32 @@
 import { AnyAction } from 'redux';
 import avatar from '../../../assets/default-icon.svg';
-import { pushOptions } from '../types/pushes';
+import { types } from '../types';
 
-const initialState = {
+export interface DateOption {
+  id: string;
+  index: number;
+}
+
+export interface SegmentOption {
+  id: string;
+  index: number;
+  segment: string;
+}
+
+export interface Preview {
+  pushIcon: string;
+  pushName: string;
+  pushTitle: string;
+  pushMessage: string;
+  pushImg: string;
+}
+interface InitialState {
+  segmentOptions: SegmentOption[];
+  dateOptions: DateOption[];
+  preview: Preview;
+}
+
+export const initialState: InitialState = {
   segmentOptions: [],
   dateOptions: [],
   preview: {
@@ -14,35 +38,50 @@ const initialState = {
   },
 };
 
-export const pushReducer = (state = initialState, action: AnyAction) => {
+type OptionsType = 'segmentOptions' | 'dateOptions';
+
+export const pushReducer = (
+  state = initialState,
+  action: AnyAction
+): InitialState => {
   switch (action.type) {
-    case pushOptions.SET_PUSH_SEGMENT: {
+    case types.SET_PUSH_SEGMENT: {
       return {
         ...state,
         segmentOptions: [...state.segmentOptions, action.payload],
       };
     }
 
-    case pushOptions.SET_PUSH_DATE: {
+    case types.SET_PUSH_DATE: {
       return {
         ...state,
         dateOptions: [...state.dateOptions, action.payload],
       };
     }
 
-    case pushOptions.DELETE_PUSH: {
-      const { optionsType, payload } = action;
+    case types.SET_CLEAR_OPTIONS: {
+      const { optionsType } = action;
+
+      return {
+        ...state,
+        [optionsType]: [],
+      };
+    }
+
+    case types.DELETE_PUSH: {
+      const optionsType: OptionsType = action.optionsType;
 
       const updatedOptions = state[optionsType].filter(
-        item => item.id !== payload
+        item => item.id !== action.payload
       );
+
       return {
         ...state,
         [optionsType]: updatedOptions,
       };
     }
 
-    case pushOptions.SET_PREVIEW_DATA: {
+    case types.SET_PREVIEW_DATA: {
       console.log('push Object =>', action.payload);
 
       return {

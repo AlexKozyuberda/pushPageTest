@@ -1,10 +1,10 @@
 import { StyledAudienceCounter } from '../../theme/styles/StyledAudienceCounter';
 
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import userThree from '../../assets/UsersThree.svg';
 
-export const AudienceCounter = () => {
-  const [count, setCount] = useState(10);
+export const AudienceCounter: FC = () => {
+  const [count] = useState(10);
   return (
     <StyledAudienceCounter>
       <div className='icon'>

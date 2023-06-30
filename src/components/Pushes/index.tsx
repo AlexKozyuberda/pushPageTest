@@ -1,12 +1,13 @@
 import { IconButton } from '@mui/material';
+import { FC } from 'react';
 import { getIconComponent } from '../../helpers/getIconComponent';
-import { StyledMainHeading } from '../../theme/styles/StyledMainContent';
 import { StyledTooltip } from '../../theme/styles/StyledTooltip';
+import { StyledMainHeading } from '../../theme/styles/layout/StyledMainContent';
 import { EnumIcons } from '../../types';
 import { AudienceCounter } from '../AudienceCounter';
-import { CreatePushes } from './Create';
+import { CreatePushes } from './CreateForm';
 
-export const Pushes = () => {
+export const Pushes: FC = () => {
   return (
     <>
       <StyledMainHeading>

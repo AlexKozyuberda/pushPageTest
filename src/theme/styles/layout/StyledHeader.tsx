@@ -1,12 +1,18 @@
 import { FormControl } from '@mui/material';
 import styled from 'styled-components';
-import { theme } from '../variables';
+import { EnumBreakpoints } from '../../../types';
+import { theme } from '../../variables';
 
 export const StyledHeader = styled.header`
   .content {
     display: flex;
     flex-basis: auto;
     padding: 20px 32px;
+
+    @media (max-width: ${EnumBreakpoints.tablet}) {
+      padding-right: 0;
+      padding-left: 0;
+    }
   }
 
   .menu {
@@ -14,6 +20,10 @@ export const StyledHeader = styled.header`
     align-items: center;
     gap: 0 32px;
     margin-left: auto;
+
+    @media (max-width: ${EnumBreakpoints.tablet}) {
+      gap: 15px;
+    }
   }
 `;
 

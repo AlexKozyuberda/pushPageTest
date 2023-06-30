@@ -1,24 +1,10 @@
 import styled from 'styled-components';
+import { EnumBreakpoints } from '../../types';
 import { theme } from '../variables';
 
 export const StyledPushContainer = styled.div`
   display: flex;
   gap: 42px;
-
-  .item {
-    flex: 1;
-  }
-
-  .fields {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-  }
-
-  .fields-group {
-    display: flex;
-    gap: 0 20px;
-  }
 `;
 
 export const StyledPushItem = styled.div`
@@ -33,8 +19,13 @@ export const StyledPushesForm = styled.div``;
 export const StyledPushesFormButtons = styled.div`
   display: flex;
   justify-content: flex-end;
+  flex-flow: row wrap;
   gap: 28px;
   padding-top: 32px;
+
+  @media (max-width: ${EnumBreakpoints.desktopSmall}) {
+    gap: 25px;
+  }
 
   .MuiButton-root {
     min-width: auto;

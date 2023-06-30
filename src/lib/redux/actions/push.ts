@@ -1,33 +1,40 @@
-import { pushOptions } from '../types/pushes';
+import { DateOption, Preview, SegmentOption } from '../reducers/push';
+import { types } from '../types';
 
 export const pushAction = Object.freeze({
-  setSegmentOptions: data => {
-    console.log('data', data);
+  setSegmentOptions: (data: SegmentOption) => {
     return {
-      type: pushOptions.SET_PUSH_SEGMENT,
+      type: types.SET_PUSH_SEGMENT,
       payload: data,
     };
   },
 
-  setDataOptions: data => {
+  setDataOptions: (data: DateOption) => {
     return {
-      type: pushOptions.SET_PUSH_DATE,
+      type: types.SET_PUSH_DATE,
       payload: data,
     };
   },
 
-  deletePushOptions: (optionsType, id: string) => {
+  deletePushOptions: (optionsType: string, id: string | undefined) => {
     return {
-      type: pushOptions.DELETE_PUSH,
+      type: types.DELETE_PUSH,
       optionsType,
       payload: id,
     };
   },
 
-  setPreviewData: data => {
+  setPreviewData: (data: Preview) => {
     return {
-      type: pushOptions.SET_PREVIEW_DATA,
+      type: types.SET_PREVIEW_DATA,
       payload: data,
+    };
+  },
+
+  clearPushOptions: (optionsType: string) => {
+    return {
+      type: types.SET_CLEAR_OPTIONS,
+      optionsType,
     };
   },
 });

@@ -1,6 +1,10 @@
-export const pushOptions = Object.freeze({
+export const types = Object.freeze({
   SET_PUSH_SEGMENT: 'SET_PUSH_SEGMENT',
   SET_PUSH_DATE: 'SET_PUSH_DATE',
   DELETE_PUSH: 'DELETE_PUSH',
   SET_PREVIEW_DATA: 'SET_PREVIEW_DATA',
+  SET_CLEAR_OPTIONS: 'SET_CLEAR_OPTIONS',
+
+  // UI
+  SET_NAVIGATION_OPEN: 'SET_NAVIGATION_OPEN',
 });

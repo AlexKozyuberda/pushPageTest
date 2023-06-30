@@ -1,77 +1,62 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, DialogContent, FormControl, MenuItem } from '@mui/material';
-import SelectCustom from '@mui/material/Select';
+import { Box, Button, useMediaQuery } from '@mui/material';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { generateID } from '../../../helpers/getGenerateId';
 import { getIconComponent } from '../../../helpers/getIconComponent';
 import { pushAction } from '../../../lib/redux/actions';
 import { getPushSegmentOptions } from '../../../lib/redux/selectors';
-import { StyledDialog } from '../../../theme/styles';
+import { data } from '../../../mock-data/data';
 import {
-  StyledAddButton,
-  StyledMainDivider,
-} from '../../../theme/styles/StyledMainContent';
+  StyledFieldContainer,
+  StyledFieldGroup,
+} from '../../../theme/styles/StyledField';
 import {
   StyledCreatePushes,
-  StyledPushContainer,
   StyledPushesForm,
   StyledPushesFormButtons,
 } from '../../../theme/styles/StyledPushes';
-import { EnumIcons } from '../../../types';
+import { StyledMainRows } from '../../../theme/styles/layout/StyledLayout';
+import {
+  StyledAddButton,
+  StyledMainDivider,
+} from '../../../theme/styles/layout/StyledMainContent';
+import { EnumBreakpoints, EnumIcons } from '../../../types';
 import { Input } from '../../FormElements/Input';
-import { Label } from '../../FormElements/Label';
 import { MultiSelect } from '../../FormElements/MultiSelect';
-import { Select } from '../../FormElements/Select';
+import { SelectField } from '../../FormElements/Select';
 import { Textarea } from '../../FormElements/Textarea';
 import { PreviewPushes } from '../Preview';
+import { FieldDialog } from './Dialog';
+import { MailingType } from './MailingType';
 import { Segmentation } from './Segmentation';
 import { pushSchema } from './config';
 
-const options = [
-  { value: 'option1', label: 'Option 1' },
-  { value: 'option2', label: 'Option 2' },
-  { value: 'option3', label: 'Option 3' },
-];
 export const CreatePushes = () => {
-  const [open, setOpen] = useState(false);
-  const [segment, setSegment] = useState('');
+  const [dialogOpen, setDialogOpen] = useState(false);
   const dispatch = useDispatch();
   const pushSegmentOptions = useSelector(getPushSegmentOptions);
+
+  const isDesktopScreen = useMediaQuery(
+    `(max-width: ${EnumBreakpoints.desktopSmall})`
+  );
 
   const methods = useForm({
     mode: 'onTouched',
     resolver: yupResolver(pushSchema),
   });
 
+  const {
+    errors: { pushMessage, pushTitle },
+  } = methods.formState;
+
   const onSubmit = (data: any) => {
     dispatch(pushAction.setPreviewData(data));
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
   };
-
-  const handleClose = () => {
-    setOpen(false);
-    setSegment('');
-  };
-
-  const handleSegmentChange = event => {
-    setSegment(event.target.value);
-    dispatch(
-      pushAction.setSegmentOptions({
-        id: generateID(),
-        index: pushSegmentOptions.length,
-        segment: event.target.value,
-      })
-    );
-  };
-
-  const {
-    errors: { pushMessage, pushTitle },
-  } = methods.formState;
 
   return (
     <StyledCreatePushes>
@@ -85,9 +70,9 @@ export const CreatePushes = () => {
               register={methods.register('pushName')}
             />
             <StyledMainDivider />
-            <StyledPushContainer>
-              <div className='item'>
-                <div className='fields'>
+            <StyledMainRows half>
+              <Box>
+                <StyledFieldContainer>
                   <Input
                     label='Заголовок сообщения'
                     id='push-title'
@@ -102,54 +87,56 @@ export const CreatePushes = () => {
                     register={methods.register('pushMessage')}
                     error={pushMessage}
                   />
-
-                  <Select
+                  <SelectField
                     control={methods.control}
                     name='pushLanguage'
                     placeholder='Выберите пункт'
                     tooltipText='Lorem ipsum'
                     label='Исходный язык'
-                    options={[{ name: 'Английский' }, { name: 'Украинский' }]}
+                    options={data}
                   />
-
-                  <div className='fields-group'>
+                  <StyledFieldGroup>
                     <Input
-                      label='Иконка (опцильнально)'
+                      label='Иконка'
                       id='push-icon'
+                      caption='(опцильнально)'
                       placeholder='Введите ссылку на иконку'
                       register={methods.register('pushIcon')}
                     />
                     <Input
-                      label='Изображение (опцильнально)'
+                      label='Изображение'
                       id='push-img'
+                      caption='(опцильнально)'
                       placeholder='Введите ссылку на изображение'
                       register={methods.register('pushImg')}
                     />
-                  </div>
+                  </StyledFieldGroup>
                   <MultiSelect
                     control={methods.control}
-                    options={options}
+                    options={data}
                     name='pushAudience'
                     label='Аудитория'
                     tooltipText='Lorem ipsum'
                     placeholder='Выберите пункт'
                   />
                   {pushSegmentOptions.length === 0 && (
-                    <StyledAddButton onClick={handleClickOpen}>
+                    <StyledAddButton onClick={handleDialogOpen}>
                       {getIconComponent(EnumIcons.plus)}
                       Добавить сегментацию
                     </StyledAddButton>
                   )}
 
                   {pushSegmentOptions.length > 0 && (
-                    <Segmentation dialogOpen={handleClickOpen} />
+                    <Segmentation dialogOpen={handleDialogOpen} />
                   )}
-                </div>
-              </div>
-              <div className='item'>
+
+                  {isDesktopScreen && <MailingType />}
+                </StyledFieldContainer>
+              </Box>
+              <Box>
                 <PreviewPushes />
-              </div>
-            </StyledPushContainer>
+              </Box>
+            </StyledMainRows>
           </StyledPushesForm>
           <StyledPushesFormButtons>
             <Button type='button' variant='outlined'>
@@ -161,25 +148,7 @@ export const CreatePushes = () => {
           </StyledPushesFormButtons>
         </form>
       </FormProvider>
-      <StyledDialog open={open} onClose={handleClose}>
-        <DialogContent>
-          <FormControl>
-            <Label label='Выберите дополнительные параметры' />
-            <SelectCustom
-              value={segment}
-              onChange={handleSegmentChange}
-              displayEmpty
-            >
-              <MenuItem value='' disabled>
-                Выберите пункт
-              </MenuItem>
-              <MenuItem value='deposit'>Депозит</MenuItem>
-              <MenuItem value='days'>Действие</MenuItem>
-              <MenuItem value='activity'>Активность</MenuItem>
-            </SelectCustom>
-          </FormControl>
-        </DialogContent>
-      </StyledDialog>
+      <FieldDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
     </StyledCreatePushes>
   );
 };

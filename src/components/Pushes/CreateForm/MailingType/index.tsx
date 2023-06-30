@@ -3,19 +3,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getIconComponent } from '../../../../helpers/getIconComponent';
 import { pushAction } from '../../../../lib/redux/actions';
 
+import { FC } from 'react';
 import { generateID } from '../../../../helpers/getGenerateId';
 import { getPushDateOptions } from '../../../../lib/redux/selectors';
+import { data } from '../../../../mock-data/data';
 import { StyledAdditionalOptions } from '../../../../theme/styles/StyledAdditionalOptions';
 import {
   StyledAddButton,
   StyledClearButton,
-} from '../../../../theme/styles/StyledMainContent';
-import { EnumIcons } from '../../../../types';
+} from '../../../../theme/styles/layout/StyledMainContent';
+import { EnumIcons, EnumPushOptions } from '../../../../types';
 import { Label } from '../../../FormElements/Label';
-import { Select } from '../../../FormElements/Select';
+import { SelectField } from '../../../FormElements/Select';
 import { DateRow } from './DateRow';
 
-export const MailingType = () => {
+export const MailingType: FC = () => {
   const dispatch = useDispatch();
   const pushDateOptions = useSelector(getPushDateOptions);
 
@@ -30,14 +32,18 @@ export const MailingType = () => {
     );
   };
 
+  const handleClear = () => {
+    dispatch(pushAction.clearPushOptions(EnumPushOptions.dateOptions));
+  };
+
   return (
     <StyledAdditionalOptions>
       <Label label='Выберите тип рассылки' tooltipText='Lorem' />
-      <Select
+      <SelectField
         control={control}
         name='pushTypeDistribution'
         placeholder='Выберите пункт'
-        options={[{ name: 'По дате' }, { name: 'По времени' }]}
+        options={data}
       />
 
       {watch('pushTypeDistribution') && (
@@ -51,7 +57,12 @@ export const MailingType = () => {
               {getIconComponent(EnumIcons.plus)}
               Добавить дату
             </StyledAddButton>
-            <StyledClearButton>Очистить</StyledClearButton>
+
+            {pushDateOptions.length > 0 && (
+              <StyledClearButton onClick={handleClear}>
+                Очистить
+              </StyledClearButton>
+            )}
           </div>
         </div>
       )}

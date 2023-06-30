@@ -1,42 +1,38 @@
 import { IconButton } from '@mui/material';
+import { FC } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { getIconComponent } from '../../../../helpers/getIconComponent';
+import { data } from '../../../../mock-data/data';
 import { StyledAdditionalOption } from '../../../../theme/styles/StyledAdditionalOptions';
-import { EnumIcons } from '../../../../types';
+import { EnumIcons, ISegmentation } from '../../../../types';
 import { Input } from '../../../FormElements/Input';
-import { Select } from '../../../FormElements/Select';
+import { SelectField } from '../../../FormElements/Select';
 
-export const DaysAfterRow = ({ index, handleDelete }) => {
+export const LastActivityRow: FC<ISegmentation> = ({ index, handleDelete }) => {
   const { control, register } = useFormContext();
+
   return (
     <StyledAdditionalOption>
       <div className='container'>
-        <Select
-          bgColor='dark'
+        <SelectField
+          color='dark'
           control={control}
-          name={`pushSegmentation.days${index}.name`}
+          name={`pushSegmentation.activity${index}.name`}
           placeholder='Выберите пункт'
-          options={[{ name: 'Дней после действия' }, { name: 'Lorem' }]}
+          options={data}
         />
         <div className='options'>
-          <Select
-            bgColor='dark'
+          <SelectField
+            color='dark'
             control={control}
-            name={`pushSegmentation.days${index}.register`}
+            name={`pushSegmentation.activity${index}.more`}
             placeholder='Выберите пункт'
-            options={[{ name: 'Регистрация' }, { name: 'Нет' }]}
-          />
-          <Select
-            bgColor='dark'
-            control={control}
-            name={`pushSegmentation.days${index}.more`}
-            placeholder='Выберите пункт'
-            options={[{ name: 'Больше' }, { name: 'Нет' }]}
+            options={data}
           />
           <Input
-            bgColor='dark'
+            color='dark'
             placeholder='Колличество'
-            register={register(`pushSegmentation.days${index}.count`)}
+            register={register(`pushSegmentation.activity${index}.count`)}
           />
         </div>
       </div>

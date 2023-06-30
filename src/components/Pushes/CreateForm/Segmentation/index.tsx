@@ -1,26 +1,37 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { getIconComponent } from '../../../../helpers/getIconComponent';
 import { pushAction } from '../../../../lib/redux/actions';
 import { getPushSegmentOptions } from '../../../../lib/redux/selectors';
+import { EnumIcons, EnumPushOptions, ISegmentOption } from '../../../../types';
+
 import { StyledAdditionalOptions } from '../../../../theme/styles/StyledAdditionalOptions';
 import {
   StyledAddButton,
   StyledClearButton,
-} from '../../../../theme/styles/StyledMainContent';
-import { EnumIcons, EnumPushOptions } from '../../../../types';
+} from '../../../../theme/styles/layout/StyledMainContent';
+
 import { Label } from '../../../FormElements/Label';
 import { DaysAfterRow } from './DaysAfterRow';
 import { DepositRow } from './DepositRow';
 import { LastActivityRow } from './LastActivityRow';
 
-export const Segmentation = ({ dialogOpen }) => {
+interface SegmentationProps {
+  dialogOpen: () => void;
+}
+
+export const Segmentation: FC<SegmentationProps> = ({ dialogOpen }) => {
   const pushSegmentOptions = useSelector(getPushSegmentOptions);
   const dispatch = useDispatch();
   const { unregister } = useFormContext();
 
-  const renderComponent = (el, index, cb) => {
+  const renderComponent = (
+    el: string,
+    index: number,
+    cb: (index: number) => void
+  ) => {
     switch (el) {
       case 'deposit':
         return <DepositRow index={index} handleDelete={cb} />;
@@ -33,13 +44,17 @@ export const Segmentation = ({ dialogOpen }) => {
     }
   };
 
-  const handleDelete = index => {
-    const { id, segment } = pushSegmentOptions.find(item => {
-      return item.index === index;
-    });
+  const handleDelete = (index: number) => {
+    const { id, segment } = pushSegmentOptions.find(
+      item => item.index === index
+    ) as ISegmentOption;
 
     unregister(`pushSegmentation.${segment}${index}`);
     dispatch(pushAction.deletePushOptions(EnumPushOptions.segmentOptions, id));
+  };
+
+  const handleClear = () => {
+    dispatch(pushAction.clearPushOptions(EnumPushOptions.segmentOptions));
   };
 
   return (
@@ -57,7 +72,7 @@ export const Segmentation = ({ dialogOpen }) => {
             {getIconComponent(EnumIcons.plus)}
             Добавить сегментацию
           </StyledAddButton>
-          <StyledClearButton>Очистить</StyledClearButton>
+          <StyledClearButton onClick={handleClear}>Очистить</StyledClearButton>
         </div>
       </div>
     </StyledAdditionalOptions>

@@ -1,17 +1,29 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { theme } from '../variables';
+import { EnumBreakpoints } from '../../../types';
+import { theme } from '../../variables';
 
 export const StyledNav = styled.nav`
+  @media (max-width: ${EnumBreakpoints.desktopMedium}) {
+    left: -100%;
+    transition: left 0.3s;
+  }
+
+  &.open {
+    left: 0;
+  }
+
   position: fixed;
   top: 0;
   left: 32px;
   bottom: 0;
+  z-index: 1000;
   width: 293px;
   padding: 0 24px;
   background-color: ${theme.colors.bg.baseDark};
 
   .logo {
+    justify-content: start;
     padding: 20px 0;
 
     img {
@@ -21,6 +33,8 @@ export const StyledNav = styled.nav`
   }
 
   .list {
+    padding-top: 40px;
+
     li {
       &:not(:last-child) {
         margin-bottom: 28px;

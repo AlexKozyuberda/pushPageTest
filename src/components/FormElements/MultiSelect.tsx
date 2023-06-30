@@ -3,21 +3,22 @@ import {
   Chip,
   IconButton,
   SelectChangeEvent,
+  TextField,
 } from '@mui/material';
 import { FC, useState } from 'react';
-import { Control, Controller, FieldValues } from 'react-hook-form';
+import { Control, Controller } from 'react-hook-form';
 import { getIconComponent } from '../../helpers/getIconComponent';
 import {
+  StyledField,
   StyledFormControl,
   StyledLabelContainer,
-  StyledMultiSelect,
 } from '../../theme/styles/StyledField';
-import { StyledClearButton } from '../../theme/styles/StyledMainContent';
+import { StyledClearButton } from '../../theme/styles/layout/StyledMainContent';
 import { EnumIcons } from '../../types';
 import { Label } from './Label';
 
 export const MultiSelect: FC<IPropTypes> = props => {
-  const { control, options, name, label, id, tooltipText, placeholder } = props;
+  const { control, options, name, label, tooltipText, placeholder } = props;
   const [selectedOptions, setSelectedOptions] = useState<OptionType[]>([]);
 
   const isOptionEqualToValue = (option: OptionType, value: OptionType) => {
@@ -56,12 +57,12 @@ export const MultiSelect: FC<IPropTypes> = props => {
             getOptionLabel={option => option.label}
             value={selectedOptions}
             popupIcon={getIconComponent(EnumIcons.choiceArrow)}
-            onChange={(event, newValue) => {
+            onChange={(_, newValue) => {
               handleOptionChange(newValue);
               onChange(newValue);
             }}
             isOptionEqualToValue={isOptionEqualToValue}
-            renderTags={(value, getTagProps) =>
+            renderTags={value =>
               value.map((option: OptionType, index: number) => (
                 <Chip
                   key={option.value}
@@ -79,7 +80,9 @@ export const MultiSelect: FC<IPropTypes> = props => {
               ))
             }
             renderInput={params => (
-              <StyledMultiSelect {...params} placeholder={placeholder} />
+              <StyledField multiSelect>
+                <TextField {...params} placeholder={placeholder} />
+              </StyledField>
             )}
           />
         )}
@@ -97,10 +100,9 @@ interface IPropTypes {
   name: string;
   label?: string;
   tooltipText?: string;
-  id?: string;
   placeholder?: string;
   options: OptionType[];
-  control: Control<FieldValues, any>;
+  control: Control<any, any>;
   onChange?: (event: SelectChangeEvent<OptionType[]>) => void;
   error?: {
     message?: string;

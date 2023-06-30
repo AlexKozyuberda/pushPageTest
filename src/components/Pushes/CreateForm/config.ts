@@ -1,9 +1,7 @@
 // Core
 import * as yup from 'yup';
 
-// eslint-disable-next-line no-template-curly-in-string
 const minCharacters = 'Минимальное количество - ${min} символов';
-// eslint-disable-next-line no-template-curly-in-string
 const maxCharacters = 'Максимальное количество - ${max} символов';
 
 export const pushSchema: yup.ObjectSchema<IPushFormShape> = yup.object({
@@ -17,9 +15,17 @@ export const pushSchema: yup.ObjectSchema<IPushFormShape> = yup.object({
     .min(3, minCharacters)
     .max(50, maxCharacters)
     .required('*'),
+  pushName: yup.string().optional(),
+  pushLanguage: yup.string().optional(),
+  pushIcon: yup.string().optional(),
+  pushImg: yup.string().optional(),
 });
 
 export interface IPushFormShape {
-  pushTitle?: string;
-  pushMessage?: string;
+  pushTitle: string;
+  pushMessage: string;
+  pushName?: string;
+  pushLanguage?: string;
+  pushImg?: string;
+  pushIcon?: string;
 }

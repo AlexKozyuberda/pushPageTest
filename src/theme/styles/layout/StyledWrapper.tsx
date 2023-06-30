@@ -1,9 +1,18 @@
 import { Dialog } from '@mui/material';
 import styled from 'styled-components';
-import { theme } from '../variables';
+import { EnumBreakpoints } from '../../../types';
+import { theme } from '../../variables';
 
 export const StyledWrapper = styled.div`
-  padding: 0 32px 0 345px;
+  @media (max-width: ${EnumBreakpoints.desktopMedium}) {
+    padding: 0 32px;
+  }
+
+  @media (max-width: ${EnumBreakpoints.tablet}) {
+    padding: 0 20px;
+  }
+
+  padding-left: 345px;
 `;
 
 export const StyledDialog = styled(Dialog)`
