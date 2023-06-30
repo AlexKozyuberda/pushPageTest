@@ -24,6 +24,6 @@
     "noFallthroughCasesInSwitch": true
   },
 
-  "include": ["src", "window.d.ts"],
+  "include": ["src", "window.d.ts", "src/__tests__/.test copy.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
